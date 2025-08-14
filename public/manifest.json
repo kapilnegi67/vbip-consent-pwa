@@ -16,25 +16,13 @@
       "src": "/icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-192x192-maskable.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/icons/icon-512x512-maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ],
   "shortcuts": [
@@ -42,37 +30,19 @@
       "name": "New VBIP Session",
       "short_name": "New Session",
       "description": "Start a new VBIP consent capture session",
-      "url": "/sessions/new",
-      "icons": [
-        {
-          "src": "/icons/shortcut-new-session.png",
-          "sizes": "96x96"
-        }
-      ]
+      "url": "/sessions/new"
     },
     {
       "name": "Pending Uploads",
       "short_name": "Pending",
       "description": "View pending offline uploads",
-      "url": "/offline/pending",
-      "icons": [
-        {
-          "src": "/icons/shortcut-pending.png",
-          "sizes": "96x96"
-        }
-      ]
+      "url": "/offline/pending"
     },
     {
       "name": "Reports",
       "short_name": "Reports",
       "description": "View audit reports and compliance data",
-      "url": "/reports",
-      "icons": [
-        {
-          "src": "/icons/shortcut-reports.png",
-          "sizes": "96x96"
-        }
-      ]
+      "url": "/reports"
     }
   ]
 }
