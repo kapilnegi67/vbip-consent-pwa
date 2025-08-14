@@ -3,10 +3,12 @@ import { getPendingUploads, markChunkUploaded, initOfflineDB } from './offline-d
 import { computeMD5 } from './crypto';
 
 export class UploadManager {
-  private isOnline = navigator.onLine;
+  private isOnline = typeof window !== 'undefined' ? navigator.onLine : false;
   private retryTimeouts = new Map<string, NodeJS.Timeout>();
 
   constructor() {
+    if (typeof window === 'undefined') return;
+    
     window.addEventListener('online', () => {
       this.isOnline = true;
       this.processUploadQueue();
@@ -26,7 +28,7 @@ export class UploadManager {
   }
 
   async tryImmediateUpload(chunk: MediaChunk): Promise<boolean> {
-    if (!this.isOnline) return false;
+    if (typeof window === 'undefined' || !this.isOnline) return false;
 
     try {
       const signedUrl = await this.getSignedUploadUrl(chunk);
@@ -47,7 +49,7 @@ export class UploadManager {
   }
 
   async processUploadQueue(): Promise<void> {
-    if (!this.isOnline) return;
+    if (typeof window === 'undefined' || !this.isOnline) return;
 
     const pendingUploads = await getPendingUploads();
     
@@ -164,7 +166,7 @@ export class UploadManager {
 
   private async getLocalChunks(sessionId: string, mediaId: string): Promise<MediaChunk[]> {
     const db = await initOfflineDB();
-    return db.getAllFromIndex('mediaChunks', 'session_media', [sessionId, mediaId]);
+    return db.getAllFromIndex('mediaChunks', 'session_media', IDBKeyRange.bound([sessionId, mediaId], [sessionId, mediaId]));
   }
 }
 

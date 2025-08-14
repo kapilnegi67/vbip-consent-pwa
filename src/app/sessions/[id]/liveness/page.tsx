@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import CaptureCamera from '@/components/CaptureCamera';
-import { CaptureConfig } from '@/types';
+import { CaptureConfig, VBIPSession } from '@/types';
 import { getSession, addClientAudit } from '@/lib/offline-db';
 
 const LIVENESS_CHALLENGES = [
@@ -21,7 +21,7 @@ export default function LivenessPage() {
   const [currentChallenge, setCurrentChallenge] = useState(0);
   const [challengeCompleted, setChallengeCompleted] = useState<boolean[]>([false, false, false]);
   const [isRecording, setIsRecording] = useState(false);
-  const [sessionData, setSessionData] = useState(null);
+  const [sessionData, setSessionData] = useState<VBIPSession | null>(null);
 
   const captureConfig: CaptureConfig = {
     chunkMs: 3000,

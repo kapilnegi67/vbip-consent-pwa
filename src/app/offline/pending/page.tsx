@@ -5,13 +5,17 @@ import { UploadQueueItem, MediaChunk } from '@/types';
 import { getPendingUploads, initOfflineDB } from '@/lib/offline-db';
 import { uploadManager } from '@/lib/upload-manager';
 
+export const dynamic = 'force-dynamic';
+
 export default function PendingUploadsPage() {
   const [pendingUploads, setPendingUploads] = useState<UploadQueueItem[]>([]);
   const [pendingChunks, setPendingChunks] = useState<MediaChunk[]>([]);
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState(typeof window !== 'undefined' ? navigator.onLine : false);
   const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const updateOnlineStatus = () => setIsOnline(navigator.onLine);
     
     window.addEventListener('online', updateOnlineStatus);
@@ -29,12 +33,14 @@ export default function PendingUploadsPage() {
   }, []);
 
   const loadPendingData = async () => {
+    if (typeof window === 'undefined') return;
+    
     try {
       const uploads = await getPendingUploads();
       setPendingUploads(uploads);
 
       const db = await initOfflineDB();
-      const chunks = await db.getAllFromIndex('mediaChunks', 'by-uploaded', false);
+      const chunks = await db.getAllFromIndex('mediaChunks', 'by-uploaded', 'false');
       setPendingChunks(chunks);
     } catch (error) {
       console.error('Failed to load pending data:', error);

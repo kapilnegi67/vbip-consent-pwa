@@ -10,12 +10,12 @@ interface VBIPOfflineDB extends DBSchema {
   mediaChunks: {
     key: string;
     value: MediaChunk;
-    indexes: { 'session_media': [string, string]; 'by-uploaded': boolean };
+    indexes: { 'session_media': string; 'by-uploaded': string };
   };
   uploadQueue: {
     key: string;
     value: UploadQueueItem;
-    indexes: { 'by-retry-count': number; 'by-created': string };
+    indexes: { 'by-retry-count': string; 'by-created': string };
   };
   clientAudit: {
     key: string;
@@ -27,6 +27,9 @@ interface VBIPOfflineDB extends DBSchema {
 let dbInstance: IDBPDatabase<VBIPOfflineDB> | null = null;
 
 export async function initOfflineDB(): Promise<IDBPDatabase<VBIPOfflineDB>> {
+  if (typeof window === 'undefined') {
+    throw new Error('IndexedDB is not available in server environment');
+  }
   if (dbInstance) return dbInstance;
 
   dbInstance = await openDB<VBIPOfflineDB>('vbip-offline', 1, {
@@ -91,7 +94,7 @@ export async function saveChunkAndEnqueue(chunk: MediaChunk): Promise<void> {
 
 export async function getChunksBySessionMedia(sessionId: string, mediaId: string): Promise<MediaChunk[]> {
   const db = await initOfflineDB();
-  return db.getAllFromIndex('mediaChunks', 'session_media', [sessionId, mediaId]);
+  return db.getAllFromIndex('mediaChunks', 'session_media', IDBKeyRange.bound([sessionId, mediaId], [sessionId, mediaId]));
 }
 
 export async function markChunkUploaded(chunkId: string, serverAck: { etag: string; confirmation: string }): Promise<void> {

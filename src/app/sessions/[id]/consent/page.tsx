@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import CaptureCamera from '@/components/CaptureCamera';
-import { CaptureConfig } from '@/types';
+import { CaptureConfig, VBIPSession } from '@/types';
 import { getSession, addClientAudit } from '@/lib/offline-db';
 import { computeSHA256 } from '@/lib/crypto';
 
@@ -27,7 +27,7 @@ export default function ConsentPage() {
   const params = useParams();
   const sessionId = params.id as string;
 
-  const [sessionData, setSessionData] = useState(null);
+  const [sessionData, setSessionData] = useState<VBIPSession | null>(null);
   const [consentRead, setConsentRead] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingComplete, setRecordingComplete] = useState(false);
