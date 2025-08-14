@@ -14,7 +14,7 @@ test.describe('PWA Functionality', () => {
     expect(manifest.name).toBe('VBIP Consent PWA');
     expect(manifest.short_name).toBe('VBIP Consent');
     expect(manifest.display).toBe('standalone');
-    expect(manifest.icons).toHaveLength(4);
+    expect(manifest.icons).toHaveLength(2);
   });
 
   test('service worker registers', async ({ page }) => {

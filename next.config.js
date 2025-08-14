@@ -5,6 +5,17 @@ const withPWA = require('next-pwa')({
   skipWaiting: true,
   runtimeCaching: [
     {
+      urlPattern: /^https?:\/\/localhost:3000\//,
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'pages',
+        expiration: {
+          maxEntries: 50,
+          maxAgeSeconds: 24 * 60 * 60
+        }
+      }
+    },
+    {
       urlPattern: /^https:\/\/api\./,
       handler: 'NetworkOnly',
       options: {
