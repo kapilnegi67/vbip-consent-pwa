@@ -1,0 +1,55 @@
+{
+  "name": "vbip-consent-pwa",
+  "version": "1.0.0",
+  "description": "Progressive Web App for VBIP (Video-Based Identity Proofing) consent capture and verification aligned with IRDAI guidelines",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "next dev -p 3000",
+    "dev:backend": "cd server && npm run dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint && cd server && npm run lint",
+    "lint:fix": "next lint --fix && cd server && npm run lint:fix",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "jest",
+    "test:e2e": "playwright test",
+    "type-check": "tsc --noEmit",
+    "install:all": "npm install && cd server && npm install"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "idb": "^8.0.0",
+    "next": "^14.0.0",
+    "next-pwa": "^5.6.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "uuid": "^9.0.0",
+    "web-push": "^3.6.0",
+    "workbox-webpack-plugin": "^7.0.0",
+    "workbox-window": "^7.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/crypto-js": "^4.2.0",
+    "@types/jest": "^29.0.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/uuid": "^9.0.0",
+    "@types/web-push": "^3.6.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "concurrently": "^8.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "fake-indexeddb": "^5.0.0",
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
